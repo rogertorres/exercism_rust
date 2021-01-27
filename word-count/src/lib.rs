@@ -10,11 +10,9 @@ pub fn word_count(words: &str) -> HashMap<String, u32> {
     let mut hmap: HashMap<String, u32> = HashMap::new();
     re.captures_iter(words)
         .map(|w| w[0].to_lowercase())
-        .filter(|w| !w.trim().is_empty())
         .for_each(|w| {
             println!("{}",w);
-            let counter = hmap.entry(w).or_insert(0);
-            *counter += 1;
+            *hmap.entry(w).or_insert(0) += 1;
         }
     );
 
