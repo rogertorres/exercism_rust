@@ -9,7 +9,6 @@ pub fn word_count(words: &str) -> HashMap<String, u32> {
     let re = Regex::new(r"\w+(?:[']?[[:alnum:]])*").unwrap();
     let mut hmap: HashMap<String, u32> = HashMap::new();
     re.captures_iter(words)
-        // .split(|c| [' ', ',', '\n', '\t'].contains(&c) )
         .map(|w| w[0].to_lowercase())
         .filter(|w| !w.trim().is_empty())
         .for_each(|w| {
