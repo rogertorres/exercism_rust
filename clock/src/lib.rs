@@ -24,14 +24,14 @@ impl Clock {
             h += minutes / 60;
 
             if m < 0 {
-                m = 60 + m;
+                m += 60;
                 h -= 1;
             };
         };
 
         // Convert hours to 24h pattern
         if !(0..24).contains(&h){
-            h = h % 24;
+            h %= 24;
             if h < 0 { h += 24 };
         };
 
