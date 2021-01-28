@@ -6,24 +6,10 @@ pub fn number(user_number: &str) -> Option<String> {
     let mut n = String::from(user_number);
     n.retain(|c| c.is_numeric());
 
-    // Regex to match eleven digits
-    let re = Regex::new(r"^(\d{10}|\b1\d{10})$").unwrap();
-    if re.is_match(&n) { 
-        Some(n) 
-    } else { 
-        None
+    // Regex to match NANP number
+    let re = Regex::new(r"\b1?([2-9]\d{2}[2-9]\d{6})\b").unwrap();
+    match re.captures(&n) {
+        Some(x) => Some(x[1].to_string()),
+        None => None,
     }
-
-    // return re.captures(user_number).unwrap_or_else(|| regex::Captures::None).get(0).map_or(None, |m| Some(m.as_str().to_string()));
 }
-
-
-
-
-
-// unimplemented!(
-//     "Given the number entered by user '{}', 
-//     convert it into SMS-friendly format. If the entered number is not a valid NANP number, 
-//     return None.",
-//     user_number
-// );
