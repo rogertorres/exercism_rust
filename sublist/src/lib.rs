@@ -37,5 +37,25 @@ pub fn sublist<T: PartialEq>(first: &[T], second: &[T]) -> Comparison {
 
 // What if not all the list items were contiguous? No windows()...
 pub fn sublist_mixed<T: PartialEq>(first: &[T], second: &[T]) -> Comparison {
-    todo!()
+    match (first.len(), second.len()){
+        (0, 0) => Comparison::Equal,
+        (_,0) => Comparison::Superlist,
+        (0,_) => Comparison::Sublist,
+        // This os O(n^2), which could become O(n) using hashset, but with overhead cost
+        (f,s) if f > s => {
+            if second.iter().all(|x| first.contains(x)){
+                Comparison::Superlist
+            } else {
+                Comparison::Unequal
+            }
+        },
+        (f,s) if f < s => {
+            if first.iter().all(|x| second.contains(x)){
+                Comparison::Sublist
+            } else {
+                Comparison::Unequal
+            }
+        },
+        (_, _) => if first == second {Comparison::Equal} else {Comparison::Unequal},
+    }
 }
