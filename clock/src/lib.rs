@@ -1,7 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Clock {
     hours: i32,
     minutes: i32,
@@ -14,7 +13,22 @@ impl fmt::Display for Clock{
 }
 
 impl Clock {
+    // New solution
     pub fn new(hours: i32, minutes: i32) -> Self {
+        const DAY: i32 = 24 * 60; //1440
+        const HOUR: i32 = 60;
+
+        let temp = (((hours * HOUR + minutes) % DAY) + DAY) % DAY;
+        //        Here to deal with negative values <---|______|     
+
+        Clock{
+            hours: temp / HOUR,
+            minutes: temp % HOUR,
+        }
+    }
+
+    // First solution
+    pub fn old_new(hours: i32, minutes: i32) -> Self {
         let mut h = hours;
         let mut m = minutes;
 

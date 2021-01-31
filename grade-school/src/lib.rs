@@ -9,6 +9,7 @@ use std::collections::BTreeMap;
 #[allow(clippy::new_without_default)]
 pub struct School<'a> {
     grades: BTreeMap<&'a str, u32>,
+    // Could also have used a HashSet or BTreeSet for the student to avoid grade dup
 }
 
 impl<'a> School<'a> {
