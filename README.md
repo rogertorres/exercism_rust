@@ -10,3 +10,4 @@ My solutions for some exercises found in [Exercism's Rust track](https://exercis
 | [Phone Number](https://exercism.io/my/solutions/6fefc94d1d3a44149648a38a6925e9b3) | Medium | Done |
 | [Grade School](https://exercism.io/my/solutions/93eaaa6efc374566bad005ef4d60e234) | Medium | Done |
 | [Sublist](https://exercism.io/my/solutions/01bf6a6d13a246399a0add505856590b) | Medium | Done |
+| [Allergies](https://exercism.io/my/solutions/46cf685c37e24cb4a5e20dcec165f8a5) | Medium | Done |
