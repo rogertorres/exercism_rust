@@ -11,7 +11,7 @@ pub enum Error {
 pub fn convert(input: &str) -> Result<String, Error> {
     let lines: Vec<&str> = input.lines().collect();
     
-    match lines.iter().find(|x| x.len() != 3){
+    match lines.iter().find(|x| x.len() % 3 != 0){
         Some(x) => Err(Error::InvalidColumnCount(x.len())),
         None if lines.len() % 4 != 0 => Err(Error::InvalidRowCount(lines.len())),
         _ => get_ocr_number(lines)
@@ -20,13 +20,26 @@ pub fn convert(input: &str) -> Result<String, Error> {
 
 // Separate the digits in a vector and convert them into a string of numbers
 pub fn get_ocr_number(lines: Vec<&str>) -> Result<String, Error>{
+    // Hashmap with flattened version of the numbers
+    let mut map: HashMap<&str,&str> = HashMap::new();
+    map.insert("     |  |   ","1");
+    map.insert(" _  _||_    ","2"); 
+    map.insert(" _  _| _|   ","3"); 
+    map.insert("   |_|  |   ","4"); 
+    map.insert(" _ |_  _|   ","5"); 
+    map.insert(" _ |_ |_|   ","6"); 
+    map.insert(" _   |  |   ","7"); 
+    map.insert(" _ |_||_|   ","8"); 
+    map.insert(" _ |_| _|   ","9"); 
+    map.insert(" _ | ||_|   ","0"); 
+
     let vec = extract_numbers(lines);
     let mut numbers = String::new();
-    let mut iter = vec.iter();
+    // let mut iter = vec.iter();
     // Why does while let on vec.iter().next() lead to an infinite loop?
-    while let Some(digit) = iter.next(){
-        println!("{}", digit);
-        numbers += get_number(digit);
+    // while let Some(digit) = iter.next(){
+    for digit in vec{
+        numbers += get_number(&map, &digit);
     };
 
     Ok(numbers)
@@ -37,8 +50,9 @@ pub fn extract_numbers(lines: Vec<&str>) -> Vec<String>{
     // How many digits are there
     let horizontal_qty = lines[0].len() / 3; 
     let vertical_qty = lines.len() / 4;  
-    let quantity = horizontal_qty * vertical_qty;
+    let quantity = horizontal_qty * vertical_qty + (vertical_qty - 1);
     let mut ratchet = 0;
+    // let mut skip = 4;
 
     // Create a vector for each digit
     let mut digits: Vec<String> = vec![String::new();quantity];
@@ -52,35 +66,30 @@ pub fn extract_numbers(lines: Vec<&str>) -> Vec<String>{
         .enumerate().for_each(|(pos,row)| {
             
             // println!("{}. {:?} / '{}'", pos, row, digits[pos+ratchet]);
-            // println!("{}. {:?} / '{}'", pos, row, ratchet);
+            // println!("{}.{}", i, pos+ratchet);
             digits[pos+ratchet].push_str(String::from_iter(row.iter()).as_str());
-
-            
-            //  Join digits from different lines from the first line (step 4)
-            // E.g.: the 1st digit of 2nd row becomes 4th digit of the only row
-            if i+1 % 5 == 0 { ratchet += horizontal_qty };
-
         });
+
+        // Join digits from different lines from the first line (step 4)
+        // E.g.: the 1st digit of 2nd row becomes 4th digit of the only row
+        if (i+1) % 4 == 0 { 
+            ratchet += horizontal_qty;
+            if ratchet < quantity {
+                digits[ratchet].push_str(",");
+                ratchet += 1;
+            }
+        };
     };
 
     digits
 }
 
 // Convert a single digit into a number (returned as &str)
-pub fn get_number(digit: &str) -> &str {
-    let mut digits: HashMap<&str,&str> = HashMap::new();
-    digits.insert("     |  |   ","1");
-    digits.insert(" _  _||_    ","2"); 
-    digits.insert(" _  _| _|   ","3"); 
-    digits.insert("   |_|  |   ","4"); 
-    digits.insert(" _ |_  _|   ","5"); 
-    digits.insert(" _ |_ |_|   ","6"); 
-    digits.insert(" _   |  |   ","7"); 
-    digits.insert(" _ |_||_|   ","8"); 
-    digits.insert(" _ |_| _|   ","9"); 
-    digits.insert(" _ | ||_|   ","0"); 
-
-    digits.get(digit).unwrap_or(&"?")
+pub fn get_number<'a>(map: &HashMap<&str,&'a str>, digit: &'a str) -> &'a str {
+    match digit{
+        "," => digit,
+        _ => map.get(digit).unwrap_or(&"?")
+    }
 }
 
 

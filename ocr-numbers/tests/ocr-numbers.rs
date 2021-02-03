@@ -22,7 +22,6 @@ fn input_with_columns_not_multiple_of_three_is_error() {
 }
 
 #[test]
-#[ignore]
 fn unrecognized_characters_return_question_mark() {
     #[rustfmt::skip]
     let input = "   \n".to_string() +
@@ -34,7 +33,6 @@ fn unrecognized_characters_return_question_mark() {
 }
 
 #[test]
-#[ignore]
 fn recognizes_0() {
     #[rustfmt::skip]
     let input = " _ \n".to_string() +
@@ -156,7 +154,6 @@ fn recognizes_110101100() {
 }
 
 #[test]
-#[ignore]
 fn replaces_only_garbled_numbers_with_question_mark() {
     #[rustfmt::skip]
     let input = "       _     _           _ \n".to_string() +
@@ -168,7 +165,6 @@ fn replaces_only_garbled_numbers_with_question_mark() {
 }
 
 #[test]
-#[ignore]
 fn recognizes_string_of_decimal_numbers() {
     #[rustfmt::skip]
     let input = "    _  _     _  _  _  _  _  _ \n".to_string() +
@@ -180,7 +176,6 @@ fn recognizes_string_of_decimal_numbers() {
 }
 
 #[test]
-#[ignore]
 fn numbers_across_multiple_lines_are_joined_by_commas() {
     #[rustfmt::skip]
     let input = "    _  _ \n".to_string() +
