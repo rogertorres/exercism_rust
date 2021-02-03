@@ -11,4 +11,4 @@ My solutions for some exercises found in [Exercism's Rust track](https://exercis
 | [Grade School](https://exercism.io/my/solutions/93eaaa6efc374566bad005ef4d60e234) | Medium | Done |
 | [Sublist](https://exercism.io/my/solutions/01bf6a6d13a246399a0add505856590b) | Medium | Done |
 | [Allergies](https://exercism.io/my/solutions/46cf685c37e24cb4a5e20dcec165f8a5) | Medium | Done |
-| [OCR Numbers](https://exercism.io/my/solutions/d56f089d8eef4a6c9de0dd3e3cdd02c0) | Hard | WIP |
+| [OCR Numbers](https://exercism.io/my/solutions/d56f089d8eef4a6c9de0dd3e3cdd02c0) | Hard | Done-ish |
